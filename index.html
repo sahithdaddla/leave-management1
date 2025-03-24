@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f9fdff, #ececec);
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 35px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: fadeInDown 1s;
+}
+
+.header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    width: 100%;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 15px;    
+    border-top-right-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: fadeInDown 1.2s ease-out, gradientShift 15s ease infinite;
+    margin: 0;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(30deg);
+    animation: shimmer 6s linear infinite;
+    pointer-events: none;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: slideRight 2s ease-out forwards;
+    transform-origin: left;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeInLeft 1s;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #9b59b6;
+            box-shadow: 0 0 8px rgba(155,89,182,0.2);
+        }
+
+        input.error, select.error, textarea.error {
+            border-color: #ff3860;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #4545ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            animation: bounceIn 1s;
+        }
+
+        button:hover {
+            background: blue;
+            transform: translateY(-2px);
+        }
+
+        #leaveDetails {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            animation: fadeIn 1s;
+        }
+
+        .success-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #43c6ac, #28a745);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            max-width: 350px;
+        }
+
+        .success-notification.show {
+            transform: translateX(0);
+        }
+
+        .success-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .success-content h3 {
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .success-content p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .label-with-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-icon {
+            margin-left: 5px;
+            color: #4545ff;
+            cursor: pointer;
+            position: relative;
+            margin-top: -7px;
+        }
+
+        .info-tooltip {
+            position: absolute;
+            left: 25px;
+            top: -5px;
+            background-color: #333;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            width: 200px;
+            display: none;
+            z-index: 10;
+            font-size: 12px;
+        }
+
+        .info-icon:hover .info-tooltip {
+            display: block;
+        }
+
+        .character-count {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .textarea-container {
+            position: relative;
+        }
+
+        .error-message {
+            color: #ff3860;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .valid-icon {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            color: #23d160;
+            display: none;
+        }
+
+        .duplicate-error {
+            padding: 15px;
+            background: #ffe8e8;
+            color: #d32f2f;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+            border-left: 4px solid #d32f2f;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header {
+                max-width: 900px;
+            }
+    
+            h2 {
+                font-size: 1.8em;
+                padding: 20px 15px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                padding: 10px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 85%;
+                padding: 15px;
+            }
+
+            .header {
+                max-width: 85%;
+            }
+    
+            h2 {
+                font-size: 1.6em;
+                padding: 18px 10px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                padding: 10px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            #leaveDetails {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+        max-width: 90%;
+    }
+    
+    h2 {
+        font-size: 1.4em;
+        padding: 15px 10px;
+    }
+
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .success-message {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            h2 {
+        font-size: 1.3em;
+        padding: 12px 8px;
+    }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 class="animate__animated animate__fadeInDown">Leave Application Form</h2>
+    </div>
+    <div class="container">
+        <section class="leave-form">
+            <form id="leaveForm" novalidate>
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <label for="employeeName" class="required">Name</label>
+                    <div class="input-container">
+                        <input type="text" id="employeeName" placeholder="Enter your name" required minlength="5" maxlength="50">
+                        <i class="fas fa-check valid-icon" id="nameValidIcon"></i>
+                    </div>
+                    <div id="nameError" class="error-message">Name must contain at least 5 alphabetical characters (excluding spaces).</div>
+                </div>
+
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <div class="label-with-info">
+                        <label for="employeeId" class="required">Employee ID</label>
+                        <div class="info-icon">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="info-tooltip">Employee ID format: ATS0XXX</div>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" id="employeeId" placeholder="Enter your employee ID" required minlength="7" maxlength="7">
+                        <i class="fas fa-check valid-icon" id="idValidIcon"></i>
+                    </div>
+                    <div id="idError" class="error-message">Please enter a valid employee ID (format: ATS0XXX).</div>
+                </div>
+
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <label for="leaveType" class="required">Leave Type</label>
+                    <select id="leaveType" required>
+                        <option value="">Select Leave Type</option>
+                        <option value="vacational">Vacational Leave</option>
+                        <option value="sick">Sick Leave</option>
+                        <option value="personal">Personal Leave</option>
+                        <option value="casual">Casual Leave</option>
+                        <option value="Maternity">Maternity Leave</option>
+                    </select>
+                    <div id="leaveTypeError" class="error-message">Please select a leave type.</div>
+                </div>
+
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <label for="startDate" class="required">Start Date</label>
+                    <input type="date" id="startDate" required>
+                    <div id="startDateError" class="error-message">Please select a valid start date.</div>
+                </div>
+
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <label for="endDate" class="required">End Date</label>
+                    <input type="date" id="endDate" required>
+                    <div id="endDateError" class="error-message">End date cannot be earlier than start date.</div>
+                </div>
+
+                <div class="form-group animate__animated animate__fadeInLeft">
+                    <label for="comments" class="required">Comments</label>
+                    <div class="textarea-container">
+                        <textarea id="comments" placeholder="Enter your comments (10-300 characters)" required minlength="10" maxlength="300"></textarea>
+                        <div id="charCount" class="character-count">0/300</div>
+                    </div>
+                    <div id="commentsError" class="error-message">Comments must contain at least 5 alphabetical characters (excluding spaces).</div>
+                </div>
+
+                <div id="duplicateError" class="duplicate-error">
+                    <i class="fas fa-exclamation-circle"></i> You already have a leave request for this date. Please choose a different date.
+                </div>
+
+                <button type="submit" class="animate__animated animate__bounceIn">Submit Request</button>
+            </form>
+        </section>
+
+        <section id="leaveDetails" style="display:none;">
+            <h3>Leave Request Details</h3>
+            <div id="requestSummary"></div>
+        </section>
+    </div>
+
+    <!-- Beautiful Success Notification -->
+    <div id="successNotification" class="success-notification">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-content">
+            <h3>Leave Request Submitted!</h3>
+            <p>Your leave application has been successfully submitted.</p>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const leaveTypeSelect = document.getElementById('leaveType');
+    const leaveForm = document.getElementById('leaveForm');
+    
+    // Show all error messages immediately when form is submitted
+    leaveForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate all fields and show errors
+        validateName();
+        validateEmployeeId();
+        validateLeaveType();
+        validateDates();
+        validateComments();
+        
+        // Check if all validations pass
+        if (isFormValid()) {
+            submitForm();
+        }
+    });
+    
+    // Function to check if the entire form is valid
+    function isFormValid() {
+        return validateName() && 
+               validateEmployeeId() && 
+               validateLeaveType() && 
+               validateDates() && 
+               validateComments();
+    }
+    
+    // Function to update date ranges based on leave type
+    function updateDateRanges() {
+        const today = new Date();
+        let startMinDate = new Date();
+        let endMaxDate = new Date();
+        
+        // Default date range (one month ago to no limit)
+        startMinDate.setMonth(today.getMonth() - 1);
+        
+        // Special handling for maternity leave
+        if (leaveTypeSelect.value === 'Maternity') {
+            // Allow selection from one month ago
+            startMinDate.setMonth(today.getMonth() - 1);
+            
+            // Only allow up to 2 months in the future
+            endMaxDate.setMonth(today.getMonth() + 2);
+            endMaxDate.setDate(endMaxDate.getDate() - 1); // Last day of the second month
+            
+            // Set the max attribute for both date inputs for maternity leave
+            const endMaxFormatted = endMaxDate.toISOString().split('T')[0];
+            startDateInput.max = endMaxFormatted;
+            endDateInput.max = endMaxFormatted;
+        } else {
+            // For other leave types, remove the max constraint
+            startDateInput.removeAttribute('max');
+            endDateInput.removeAttribute('max');
+        }
+        
+        // Set the min attribute for both date inputs
+        const startMinFormatted = startMinDate.toISOString().split('T')[0];
+        startDateInput.min = startMinFormatted;
+        endDateInput.min = startMinFormatted;
+    }
+    
+    // Update date ranges when leave type changes
+    leaveTypeSelect.addEventListener('change', function() {
+        updateDateRanges();
+        validateLeaveType();
+    });
+    
+    // Initialize date ranges
+    updateDateRanges();
+    
+    // Add character count for comments
+    const commentsTextarea = document.getElementById('comments');
+    const charCount = document.getElementById('charCount');
+
+    commentsTextarea.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        charCount.textContent = `${currentLength}/300`;
+        
+        validateComments();
+    });
+
+    // Function to show error
+    function showError(inputElement, errorElement) {
+        inputElement.classList.add('error');
+        errorElement.classList.add('visible');
+        // Hide valid icon if it exists
+        const validIcon = document.getElementById(inputElement.id + 'ValidIcon');
+        if (validIcon) validIcon.style.display = 'none';
+    }
+
+    // Function to hide error
+    function hideError(inputElement, errorElement) {
+        inputElement.classList.remove('error');
+        errorElement.classList.remove('visible');
+        // Show valid icon if it exists and input is valid
+        const validIcon = document.getElementById(inputElement.id + 'ValidIcon');
+        if (validIcon && inputElement.value.trim() !== '') {
+            validIcon.style.display = 'block';
+        }
+    }
+
+    // Prevent space-only inputs
+    function preventSpaceOnlyInput(inputElement) {
+        inputElement.addEventListener('input', function() {
+            // If input contains only spaces, clear it
+            if (this.value.trim() === '' && this.value !== '') {
+                this.value = '';
+            }
+        });
+    }
+
+    // Name validation
+    const employeeNameInput = document.getElementById('employeeName');
+    const nameError = document.getElementById('nameError');
+    
+    function validateName() {
+        const value = employeeNameInput.value;
+        const trimmedValue = value.trim();
+        const nameAlphaCount = trimmedValue.replace(/[^A-Za-z]/g, '').length;
+        
+        if (trimmedValue === '' || nameAlphaCount < 5) {
+            showError(employeeNameInput, nameError);
+            return false;
+        } else {
+            hideError(employeeNameInput, nameError);
+            return true;
+        }
+    }
+    
+    employeeNameInput.addEventListener('input', function(e) {
+        const value = e.target.value;
+        const filteredValue = value.replace(/[^A-Za-z\s]/g, '');
+        if (value !== filteredValue) {
+            e.target.value = filteredValue;
+        }
+        validateName();
+    });
+    
+    employeeNameInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+        validateName();
+    });
+    
+    preventSpaceOnlyInput(employeeNameInput);
+
+    // Employee ID validation
+    const employeeIdInput = document.getElementById('employeeId');
+    const idError = document.getElementById('idError');
+    
+    function validateEmployeeId() {
+        const value = employeeIdInput.value;
+        const trimmedValue = value.trim();
+        
+        if (trimmedValue === '' || !/^ATS0(?!000)\d{3}$/.test(trimmedValue)) {
+            showError(employeeIdInput, idError);
+            return false;
+        } else {
+            hideError(employeeIdInput, idError);
+            return true;
+        }
+    }
+    
+    employeeIdInput.addEventListener('input', function(e) {
+        const value = e.target.value;
+        const filteredValue = value.replace(/[^A-Z0-9]/g, '');
+        if (value !== filteredValue) {
+            e.target.value = filteredValue;
+        }
+        
+        // Force uppercase
+        e.target.value = e.target.value.toUpperCase();
+        
+        // Auto-insert ATS0 prefix if user tries to type something else
+        if (e.target.value.length >= 1 && !e.target.value.startsWith('ATS0')) {
+            const digits = e.target.value.replace(/\D/g, '');
+            e.target.value = 'ATS0' + digits.slice(0, 3);
+        }
+        
+        validateEmployeeId();
+    });
+    
+    employeeIdInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+        validateEmployeeId();
+    });
+    
+    preventSpaceOnlyInput(employeeIdInput);
+
+    // Leave type validation
+    const leaveTypeError = document.getElementById('leaveTypeError');
+    
+    function validateLeaveType() {
+        if (!leaveTypeSelect.value) {
+            showError(leaveTypeSelect, leaveTypeError);
+            return false;
+        } else {
+            hideError(leaveTypeSelect, leaveTypeError);
+            return true;
+        }
+    }
+    
+    leaveTypeSelect.addEventListener('change', validateLeaveType);
+
+    // Date validation with custom date inputs
+    startDateInput.addEventListener('input', function(e) {
+        // Ensure year is exactly 4 digits
+        const dateParts = e.target.value.split('-');
+        if (dateParts.length === 3) {
+            const year = dateParts[0];
+            if (!/^\d{4}$/.test(year)) {
+                // If year is not exactly 4 digits, reset to empty
+                e.target.value = '';
+            }
+        }
+        validateDates();
+    });
+
+    endDateInput.addEventListener('input', function(e) {
+        // Ensure year is exactly 4 digits
+        const dateParts = e.target.value.split('-');
+        if (dateParts.length === 3) {
+            const year = dateParts[0];
+            if (!/^\d{4}$/.test(year)) {
+                // If year is not exactly 4 digits, reset to empty
+                e.target.value = '';
+            }
+        }
+        validateDates();
+    });
+    
+    function validateDates() {
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        
+        let startDateValid = true;
+        let endDateValid = true;
+        
+        // Get current date range constraints
+        const today = new Date();
+        let startMinDate = new Date();
+        startMinDate.setMonth(today.getMonth() - 1);
+        const startMinFormatted = startMinDate.toISOString().split('T')[0];
+        
+        // Check max date for maternity leave
+        let maxDateCheck = true;
+        if (leaveTypeSelect.value === 'Maternity') {
+            let endMaxDate = new Date();
+            endMaxDate.setMonth(today.getMonth() + 2);
+            endMaxDate.setDate(endMaxDate.getDate() - 1);
+            const endMaxFormatted = endMaxDate.toISOString().split('T')[0];
+            
+            if (startDate && new Date(startDate) > new Date(endMaxFormatted)) {
+                maxDateCheck = false;
+            }
+            
+            if (endDate && new Date(endDate) > new Date(endMaxFormatted)) {
+                maxDateCheck = false;
+            }
+        }
+        
+        // Validate start date - must be within the allowed range
+        if (!startDate || new Date(startDate) < new Date(startMinFormatted) || !maxDateCheck) {
+            showError(startDateInput, document.getElementById('startDateError'));
+            startDateValid = false;
+        } else {
+            hideError(startDateInput, document.getElementById('startDateError'));
+        }
+        
+        // Validate end date - must be within the allowed range and not earlier than start date
+        if (!endDate || (endDate && startDate && new Date(endDate) < new Date(startDate)) || !maxDateCheck) {
+            showError(endDateInput, document.getElementById('endDateError'));
+            endDateValid = false;
+        } else {
+            hideError(endDateInput, document.getElementById('endDateError'));
+        }
+        
+        return startDateValid && endDateValid;
+    }
+    
+    startDateInput.addEventListener('change', validateDates);
+    endDateInput.addEventListener('change', validateDates);
+    startDateInput.addEventListener('blur', validateDates);
+    endDateInput.addEventListener('blur', validateDates);
+
+    // Comments validation
+    function validateComments() {
+        const comments = commentsTextarea.value;
+        const trimmedComments = comments.trim();
+        const commentsAlphaCount = trimmedComments.replace(/[^A-Za-z]/g, '').length;
+        
+        if (trimmedComments === '' || commentsAlphaCount < 5 || trimmedComments.length < 10) {
+            showError(commentsTextarea, document.getElementById('commentsError'));
+            return false;
+        } else {
+            hideError(commentsTextarea, document.getElementById('commentsError'));
+            return true;
+        }
+    }
+    
+    commentsTextarea.addEventListener('blur', function() {
+        this.value = this.value.trim();
+        validateComments();
+        // Update character count after trimming
+        charCount.textContent = `${this.value.length}/300`;
+    });
+    
+    preventSpaceOnlyInput(commentsTextarea);
+
+    // Form submission function
+    function submitForm() {
+        const name = document.getElementById('employeeName').value.trim();
+        const id = document.getElementById('employeeId').value.trim();
+        const type = document.getElementById('leaveType').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const comments = document.getElementById('comments').value.trim();
+
+        // Check for duplicate leave request with same employee ID, name, and start date
+        const existingRequests = JSON.parse(localStorage.getItem('leaveRequests') || '[]');
+        const duplicateRequest = existingRequests.find(request => 
+            request.employeeId === id && 
+            request.name === name && 
+            request.startDate === startDate
+        );
+
+        if (duplicateRequest) {
+            // Show duplicate error message
+            const duplicateError = document.getElementById('duplicateError');
+            duplicateError.style.display = 'block';
+            duplicateError.className = 'duplicate-error animate__animated animate__shakeX';
+            
+            // Hide the error after 4 seconds
+            setTimeout(() => {
+                duplicateError.style.display = 'none';
+            }, 4000);
+            
+            return;
+        }
+
+        // Store in localStorage
+        const leaveRequest = {
+            id: Date.now(),
+            name,
+            employeeId: id,
+            leaveType: type,
+            startDate,
+            endDate,
+            comments,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        existingRequests.push(leaveRequest);
+        localStorage.setItem('leaveRequests', JSON.stringify(existingRequests));
+
+        // Show beautiful success notification
+        const successNotification = document.getElementById('successNotification');
+        successNotification.classList.add('show');
+        
+        // Hide the notification after 4 seconds
+        setTimeout(() => {
+            successNotification.classList.remove('show');
+        }, 4000);
+
+        // Reset form and character count
+        leaveForm.reset();
+        document.getElementById('charCount').textContent = '0/300';
+        
+        // Reset all validation states
+        document.querySelectorAll('.error-message').forEach(el => el.classList.remove('visible'));
+        document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error'));
+        document.querySelectorAll('.valid-icon').forEach(el => el.style.display = 'none');
+    }
+});
+    </script>
+</body>
+</html>
